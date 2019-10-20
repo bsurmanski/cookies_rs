@@ -8,8 +8,8 @@ edition = "2018"
 lazy_static = "1.2.0"
 
 # GL Library
-#rockwork = { git = "https://github.com/bsurmanski/rockwork", tag = "ggj19" }
-rockwork = { path = "../rockwork" }
+rockwork = { git = "https://github.com/bsurmanski/rockwork", tag = "cookies" }
+# rockwork = { path = "../rockwork" }
 
 # Rendering
 gl = "0.11.0"
