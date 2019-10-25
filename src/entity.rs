@@ -12,12 +12,13 @@ pub trait Entity {
     fn are_you_cookie(&self) -> bool { false }
     fn is_dead(&self) -> bool { false }
     fn is_baddie(&self) -> bool { false }
+    fn is_girl(&self) -> bool { false }
 
     fn get_position(&self) -> Vector3<f32>;
     fn get_rotation(&self) -> f32;
 
     fn update(&mut self, dt: f32);
-    fn on_collision(&mut self, o: &mut DuckMan) {}
+    fn on_collision(&mut self, _o: &mut DuckMan) {}
     fn get_mesh(&self) -> &Mesh;
     fn get_texture(&self) -> &Texture;
     fn get_scale(&self) -> f32 { 1.0 }

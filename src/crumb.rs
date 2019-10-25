@@ -3,7 +3,6 @@ use crate::collision::*;
 use crate::man::*;
 
 use nalgebra::Vector3;
-use rand::random;
 use rockwork::mesh::*;
 use rockwork::texture::*;
 
@@ -24,10 +23,8 @@ pub struct Crumb {
 impl Crumb {
     pub fn new(position: Vector3<f32>, rotation: f32) -> Self {
         Crumb {
-            position: Vector3::new(random::<f32>() * 18.0 - 9.0, 
-                                   0.0,
-                                   random::<f32>() * 18.0 - 9.0),
-            rotation: random::<f32>() * 6.0, // 6 = 2PI (close enough)
+            position,
+            rotation,
             tick: 0.0,
             dead: false,
         }

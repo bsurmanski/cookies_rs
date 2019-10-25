@@ -71,7 +71,7 @@ impl Entity for Grub {
             self.rotation += 10.0 * dt * self.spin as f32;
         } else {
             let rot = Matrix4::from_scaled_axis(Vector3::new(0.0, self.rotation, 0.0));
-            let mut dv = rot * Vector4::new(0.0, 0.0, -6.4 * dt * f32::sqrt(self.scale), 0.0);
+            let dv = rot * Vector4::new(0.0, 0.0, -6.4 * dt * f32::sqrt(self.scale), 0.0);
             self.position += dv.xyz();
             if self.position.x < -9.0 || self.position.x > 9.0 ||
                self.position.z < -9.0 || self.position.z > 9.0 {

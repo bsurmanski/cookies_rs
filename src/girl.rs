@@ -45,6 +45,8 @@ impl Entity for Girl {
 
     fn nummies(&self) -> f32 { 0.07 }
 
+    fn is_girl(&self) -> bool { true }
+
     fn get_position(&self) -> Vector3<f32> {
         self.position
     }
@@ -56,7 +58,6 @@ impl Entity for Girl {
     fn update(&mut self, dt: f32) {
         self.tick += dt;
         self.timer -= dt;
-        let inflection = f32::cos(self.tick * 20.0) < 0.0 && f32::cos((self.tick + dt) * 20.0) > 0.0;
         let targety = f32::abs(f32::sin(self.tick * 10.0)) / 4.0;
 
         if self.timer <= 0.0 {
@@ -84,7 +85,7 @@ impl Entity for Girl {
             }
 
             let rot = Matrix4::from_scaled_axis(Vector3::new(0.0, self.rotation, 0.0));
-            let mut dv = rot * Vector4::new(0.0, 0.0, -1.6 * dt * f32::sqrt(self.scale), 0.0);
+            let dv = rot * Vector4::new(0.0, 0.0, -1.6 * dt * f32::sqrt(self.scale), 0.0);
             self.position += dv.xyz();
             self.position.y += (targety - self.position.y) * 0.6;
 

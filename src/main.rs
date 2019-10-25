@@ -32,9 +32,6 @@ use rockwork::mesh::*;
 use rockwork::texture::*;
 use sdl2::event::Event;
 use sdl2::keyboard::Scancode;
-
-use std::collections::HashSet;
-
 use std::time::Duration;
 
 enum Screen {

@@ -61,7 +61,7 @@ impl Entity for Mouse {
         self.rotation += 4.8 * dt * self.spin as f32;
 
         let rot = Matrix4::from_scaled_axis(Vector3::new(0.0, self.rotation, 0.0));
-        let mut dv = rot * Vector4::new(0.0, 0.0, -3.2 * dt, 0.0);
+        let dv = rot * Vector4::new(0.0, 0.0, -3.2 * dt, 0.0);
         self.position += dv.xyz();
 
         if self.position.x < -9.0 || self.position.x > 9.0 ||

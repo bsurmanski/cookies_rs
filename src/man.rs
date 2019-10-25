@@ -9,7 +9,6 @@ use rockwork::texture::*;
 use sdl2::mixer::*;
 
 use std::cell::RefCell;
-use std::sync::Mutex;
 use lazy_static::*;
 
 macro_rules! include_wav {
@@ -23,7 +22,13 @@ lazy_static!{
     static ref MESH: Mesh = rockwork::include_mdl!("../res/pillduck.mdl");
 }
 
+struct DuckSounds {
+    hop: Chunk,
+}
+
 thread_local!(static HOP: RefCell<Option<Chunk>> = RefCell::new(None));
+thread_local!(static EAT: RefCell<Option<Chunk>> = RefCell::new(None));
+thread_local!(static GIRLDEAD: RefCell<Option<Chunk>> = RefCell::new(None));
 
 #[derive(Clone)]
 pub struct DuckMan {
@@ -42,6 +47,14 @@ impl DuckMan {
             *h.borrow_mut() = Some(include_wav!("../res/hop.wav"));
         });
 
+        EAT.with(|h| {
+            *h.borrow_mut() = Some(include_wav!("../res/munch.wav"));
+        });
+
+        GIRLDEAD.with(|h| {
+            *h.borrow_mut() = Some(include_wav!("../res/girldead.wav"));
+        });
+
         DuckMan {
             position: zero(),
             rotation: 0.0,
@@ -56,6 +69,15 @@ impl DuckMan {
     pub fn eat(&mut self, e: &dyn Entity) {
         self.scale += e.nummies();
         self.nummy_timer += e.yummy_nummies();
+
+        EAT.with(|c| {
+            sdl2::mixer::Channel(-1).play_timed(c.borrow().as_ref().unwrap(), 0, -1).unwrap();
+        });
+        if e.is_girl() {
+            GIRLDEAD.with(|c| {
+                sdl2::mixer::Channel(-1).play_timed(c.borrow().as_ref().unwrap(), 0, -1).unwrap();
+            });
+        }
     }
 
     pub fn kill(&mut self) {
@@ -123,7 +145,7 @@ impl Entity for DuckMan {
 
         if inflection && self.moved {
             HOP.with(|h| {
-                sdl2::mixer::Channel(-1).play_timed(h.borrow().as_ref().unwrap(), 0, -1);
+                sdl2::mixer::Channel(-1).play_timed(h.borrow().as_ref().unwrap(), 0, -1).unwrap();
             });
             // TODO play sound
         }

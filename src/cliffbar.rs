@@ -3,8 +3,6 @@ use crate::entity::*;
 use crate::man::*;
 
 use nalgebra::Vector3;
-use rand::Rng;
-use rand::random;
 use rockwork::mesh::*;
 use rockwork::texture::*;
 
